@@ -45,7 +45,6 @@ function App() {
       await setState({
         ...state,
         number1: temp,
-        swap: false,
       })
       handleCalcute()
     }
@@ -54,7 +53,6 @@ function App() {
       await setState({
         ...state,
         number2: temp,
-        swap: false,
       })
       handleCalcute()
     }
@@ -68,13 +66,11 @@ function App() {
           ...state,
           result: temp,
           operator: 'plus',
-          swap: false,
         })
       } else {
         setState({
           ...state,
           operator: "plus",
-          swap: false,
         })
       }
     } 
@@ -83,15 +79,15 @@ function App() {
         const temp = (Number(stateRef.current.number1.join(''))) - (Number(stateRef.current.number2.join('')));
         setState({
           ...state,
+          number1: stateRef.current.number1,
+          number2: stateRef.current.number2,
           result: temp,
           operator: 'minus',
-          swap: false,
         })
       } else {
         setState({
           ...state,
           operator: "minus",
-          swap: false,
         })
       }
     } 
@@ -100,15 +96,15 @@ function App() {
         const temp = (Number(stateRef.current.number1.join(''))) * (Number(stateRef.current.number2.join('')));
         setState({
           ...state,
+          number1: stateRef.current.number1,
+          number2: stateRef.current.number2,
           result: temp,
           operator: 'multi',
-          swap: false,
         })
       } else {
         setState({
           ...state,
           operator: "multi",
-          swap: false,
         })
       }
     }
@@ -117,15 +113,15 @@ function App() {
         const temp = (Number(stateRef.current.number1.join(''))) / (Number(stateRef.current.number2.join('')));
         setState({
           ...state,
+          number1: stateRef.current.number1,
+          number2: stateRef.current.number2,
           result: temp,
           operator: 'devision',
-          swap: false,
         })
       } else {
         setState({
           ...state,
           operator: 'devision',
-          swap: false,
         })
       }
     }
@@ -134,31 +130,24 @@ function App() {
         const temp = (Number(stateRef.current.number1.join(''))) ^ (Number(stateRef.current.number2.join('')));
         setState({
           ...state,
+          number1: stateRef.current.number1,
+          number2: stateRef.current.number2,
           result: temp,
           operator: 'XOR',
-          swap: false,
         })
       } else {
         setState({
           ...state,
           operator: "XOR",
-          swap: false,
         })
       }
     }
     if (opr === "swap") {
       if (stateRef.current.number1.length > 0 && stateRef.current.number2.length > 0) {
-        let temp = ''
-        let num1 = state.number1
-        let num2 = state.number2
-        temp = num1
-        num1 = num2
-        num2 = temp
         await setState({
           ...state,
-          number1: num1,
-          number2: num2,
-          swap: true,
+          number1: state.number2,
+          number2: state.number1,
         })
         handleSwap(state.operator)
       } else {
@@ -168,7 +157,6 @@ function App() {
             ...state,
             number1: [],
             number2: num1,
-            swap: true,
           })
           handleSwap(stateRef.current.operator)
         } else {
@@ -177,7 +165,6 @@ function App() {
             ...state,
             number1: num2,
             number2: [],
-            swap: true,
           })
           handleSwap(stateRef.current.operator)
         }
@@ -187,11 +174,13 @@ function App() {
   }
 
   const handleSwap = (opr) => {
-    if (state.swap && opr === "plus") {
+    if (opr === "plus") {
       if (stateRef.current.number1.length > 0 && stateRef.current.number2.length > 0) {
         const temp = (Number(stateRef.current.number1.join(''))) + (Number(stateRef.current.number2.join('')));
         setState({
           ...state,
+          number1: stateRef.current.number1,
+          number2: stateRef.current.number2,
           result: temp,
           operator: 'plus'
         })
@@ -202,11 +191,13 @@ function App() {
         })
       }
     } 
-    if (state.swap && opr === "minus") {
+    if (opr === "minus") {
       if (stateRef.current.number1.length > 0 && stateRef.current.number2.length > 0) {
         const temp = (Number(stateRef.current.number1.join(''))) - (Number(stateRef.current.number2.join('')));
         setState({
           ...state,
+          number1: stateRef.current.number1,
+          number2: stateRef.current.number2,
           result: temp,
           operator: 'minus'
         })
@@ -217,11 +208,13 @@ function App() {
         })
       }
     } 
-    if (state.swap && opr === "multi") {
+    if (opr === "multi") {
       if (stateRef.current.number1.length > 0 && stateRef.current.number2.length > 0) {
         const temp = (Number(stateRef.current.number1.join(''))) * (Number(stateRef.current.number2.join('')));
         setState({
           ...state,
+          number1: stateRef.current.number1,
+          number2: stateRef.current.number2,
           result: temp,
           operator: 'multi'
         })
@@ -237,21 +230,27 @@ function App() {
         const temp = (Number(stateRef.current.number1.join(''))) / (Number(stateRef.current.number2.join('')));
         setState({
           ...state,
+          number1: stateRef.current.number1,
+          number2: stateRef.current.number2,
           result: temp,
           operator: 'devision'
         })
       } else {
         setState({
           ...state,
+          number1: stateRef.current.number1,
+          number2: stateRef.current.number2,
           operator: 'devision',
         })
       }
     }
-    if (state.swap && opr === "XOR") {
+    if (opr === "XOR") {
       if (stateRef.current.number1.length > 0 && stateRef.current.number2.length > 0) {
         const temp = (Number(stateRef.current.number1.join(''))) ^ (Number(stateRef.current.number2.join('')));
         setState({
           ...state,
+          number1: stateRef.current.number1,
+          number2: stateRef.current.number2,
           result: temp,
           operator: 'XOR'
         })
@@ -357,7 +356,7 @@ function App() {
                     >
                       <NumberFormat
                         displayType="text"
-                        value={state.number1.join('')}
+                        value={stateRef.current.number1.join('')}
                         thousandSeparator=","
                         name="number1"
                       />
@@ -370,7 +369,7 @@ function App() {
                         displayType="text"
                         name="number2"
                         thousandSeparator=","
-                        value={state.number2.join('')}
+                        value={stateRef.current.number2.join('')}
                       />
                     </td>
                     <td style={styles.table.td}>
